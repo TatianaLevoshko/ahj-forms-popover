@@ -1,0 +1,35 @@
+version: 1.0.{build}
+image: Ubuntu2004  # образ для сборки
+
+stack: node 20  # окружение
+
+branches:
+  only:
+    - main # ветка git
+
+    cache: node_modules  # кеширование
+
+install:
+  - npm install
+
+build_script:
+  - npm run build
+
+  test_script:
+  - test  # скрипт тестирования
+
+  build: off # отключаем встроенную в appveyor систему сборки
+
+artifacts:
+  - path: ./dist
+    name: Dist
+
+deploy_script:  # скрипт развёртывания
+  - git config --global credential.helper store
+  - git config --global user.name AppVeyor
+  - git config --global user.email ci@appveyor.com
+  - echo "https://$GITHUB_TOKEN:x-oauth-basic@github.com" > "$HOME/.git-credentials"
+  - npx gh-pages -d dist -u "appveyor-bot <ci@appveyor>"
+
+
+

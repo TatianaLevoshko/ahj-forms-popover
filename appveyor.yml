@@ -7,7 +7,7 @@ branches:
   only:
     - main # ветка git
 
-cache: node_modules  # кеширование
+cache: false  # временно отключить кеширование
 
 install:
   - npm install
@@ -16,7 +16,7 @@ build_script:
   - npm run build
 
 test_script:
-  - test  # скрипт тестирования
+  - npm test  # скрипт тестирования
   
 build: off # отключаем встроенную в appveyor систему сборки
 

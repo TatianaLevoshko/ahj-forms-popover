@@ -14,11 +14,10 @@ install:
 
 build_script:
   - npm run build
+  - ls -la ./dist
 
 test_script:
   - npm test  # скрипт тестирования
-  
-build: off # отключаем встроенную в appveyor систему сборки
 
 artifacts:
   - path: ./dist

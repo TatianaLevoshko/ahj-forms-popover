@@ -7,7 +7,7 @@ branches:
   only:
     - main # ветка git
 
-    cache: node_modules  # кеширование
+cache: node_modules  # кеширование
 
 install:
   - npm install
@@ -17,7 +17,7 @@ build_script:
 
   test_script:
   - test  # скрипт тестирования
-
+  
   build: off # отключаем встроенную в appveyor систему сборки
 
 artifacts:

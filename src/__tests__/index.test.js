@@ -10,23 +10,37 @@ const html = `
   </div>
 `;
 
-test("Popover toggles active class", () => {
+// Вспомогательная функция для настройки DOM
+function setupDOM() {
   const dom = new JSDOM(html, { runScripts: "outside-only" });
   const { document } = dom.window;
 
   const button = document.querySelector(".btn");
   const popover = document.querySelector(".popover");
 
-  // Логика для клика
+  // Логика toggle
   button.addEventListener("click", () => {
-    popover.classList.toggle("active");
+    if (popover.classList.contains("active")) {
+      popover.classList.remove("active");
+    } else {
+      popover.classList.add("active");
+    }
   });
 
-  // Клик
-  button.click();
-  expect(popover.classList.contains("active")).toBeTruthy(); // Добавление класса
+  return { button, popover };
+}
 
-  // Повторный клик
-  button.click();
-  expect(popover.classList.contains("active")).toBeFalsy(); // Удаление класса
+test("Добавление класса active при клике", () => {
+  const { button, popover } = setupDOM();
+
+  button.click(); // Симуляция клика
+  expect(popover.classList.contains("active")).toBeTruthy();
+});
+
+test("Удаление класса active при повторном клике", () => {
+  const { button, popover } = setupDOM();
+
+  button.click(); // Первый клик
+  button.click(); // Второй клик
+  expect(popover.classList.contains("active")).toBeFalsy();
 });
